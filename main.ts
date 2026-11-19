@@ -1,14 +1,16 @@
 // Neon Coast Cover Studio — a gta6-cover-art-01 entry (Node 22, standard library only): the app is this
-// directory's app/ folder, plain static files a desktop browser loads offline (app/index.html and its ES
-// modules, OFL fonts vendored under app/fonts/, no library and no network request), and the program hands
-// it in. It copies app/ and screenshots/ from beside this file to /output and writes /output/dossier.json,
-// the summary the judge reads, with the vendored make.fun library. The app is a GTA-style cover maker:
-// six multi-panel layouts, per-panel crop and positioning, six colour grades, procedural sun/palm/halftone
-// decorations and a gradient title block, exporting 1080x1080, 1080x1350 and 1920x1080 PNGs. Its two
-// sample photos (app/samples/) were made for make.fun with an image model and are free to use. Put your
-// 3 or 4 PNG or JPEG screenshots in screenshots/ (the first by name is the cover) and run it.
+// directory's app/ folder, plain static files a desktop browser loads offline (app/index.html and its ES modules,
+// no library and no network request), and the program hands it in. It copies app/ and screenshots/ from beside
+// this file to /output and writes /output/dossier.json, the summary the judge reads, with the vendored make.fun
+// library. The app turns the user's own photos into multi-panel GTA-style cover art — six layouts, five colour
+// grades, per-panel crop and position, editable bold caption and script subtitle, and PNG export in 1080 x 1080,
+// 1080 x 1350 and 1920 x 1080. Its two sample photos (app/samples/) were made for make.fun with an image model
+// and are free to use; its lettering is Archivo Black, Bebas Neue and Pacifico under the SIL Open Font License.
+// Put your 3 or 4 PNG or JPEG screenshots in screenshots/ (the first by name is the cover) and run it.
 //
-// Serve it locally with `node serve.ts`, then open http://localhost:8080.
+// Screenshots (screenshots/1-cover.jpg … 4-cover.jpg) are taken from the app itself: the wide, portrait and
+// square covers are the app's own PNG exports scaled down, and the editor shot is the live editor with a sample
+// photo loaded. See shots.json for the exact scenes.
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
