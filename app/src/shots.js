@@ -1,48 +1,31 @@
-// Fixed scenes for screenshots: ?shot=editor shows the editor with a sample
-// photo loaded; ?shot=cover shows the cover alone, full frame. Query keys:
-// photo (sample name), photo2 (second sample), caption, subtitle, layout,
-// grade and size (square, portrait or wide). window.__shotReady is set
-// once the scene has painted, so a screenshot runner can wait on it.
-import { EXPORT_SIZES, GRADES, layoutById } from './layouts.js';
+// Fixed scenes for screenshots: ?shot=editor shows the editor with a photo
+// loaded; ?shot=cover shows the exported cover alone at the requested size.
+// Params: photo, photo2, caption, subtitle, layout, grade, size
+// (square | portrait | wide). window.__shotReady is set once painted.
+import { EXPORT_SIZES } from './cover.js';
 
-export async function runShot(shot, query, state, redraw, loadImage, loadSample) {
-  const canvas = document.getElementById('coverCanvas');
-  const titleInput = document.getElementById('titleInput');
-  const subtitleInput = document.getElementById('subtitleInput');
-  const layout = query.get('layout') ?? 'comic';
-  const grade = query.get('grade') ?? 'sunset';
-  const sizeId = query.get('size') ?? (shot === 'cover' ? 'wide' : 'wide');
-  const size = EXPORT_SIZES[sizeId] ?? EXPORT_SIZES.wide;
-  state.layout = layout;
-  state.grade = grade;
-  state.size = sizeId;
-  state.title = query.get('caption') ?? 'SUNSET HEIST';
-  state.subtitle = query.get('subtitle') ?? 'a story in neon & gold';
-  if (titleInput) titleInput.value = state.title;
-  if (subtitleInput) subtitleInput.value = state.subtitle;
-  document.querySelectorAll('#sizeRadios .chip').forEach((btn) => {
-    btn.classList.toggle('active', btn.dataset.size === sizeId);
-  });
-  // Chips were built from the default state, so re-mark the active ones by
-  // their display names (layout ids and chip labels differ).
-  document.querySelectorAll('#layoutButtons .chip').forEach((btn) => {
-    btn.classList.toggle('active', btn.textContent === layoutById(layout).name);
-  });
-  const gradeName = GRADES.find((g) => g.id === grade)?.name ?? '';
-  document.querySelectorAll('#gradeButtons .chip').forEach((btn) => {
-    btn.classList.toggle('active', btn.textContent === gradeName);
-  });
-  await loadSample(query.get('photo') ?? 'boulevard');
-  if (query.get('photo2')) await loadSample(query.get('photo2'));
-  state.panelPhotos = [0, 1, 0, 1].slice(0, 4);
+export async function runShot(shot, query, app) {
+  const { state, loadSample, redraw, syncControls } = app;
+  state.layout = query.get('layout') || 'comic';
+  state.grade = query.get('grade') || 'sunset';
+  state.caption = query.get('caption') || 'Sunset Heist';
+  state.subtitle = query.get('subtitle') || 'neon coast nights';
+  const sizeId = query.get('size') || (shot === 'cover' ? 'wide' : 'square');
+  const size = EXPORT_SIZES.find((s) => s.id === sizeId) || EXPORT_SIZES[2];
+  state.size = size.id;
+  const seed = Number(query.get('seed'));
+  if (Number.isFinite(seed) && seed > 0) state.seed = seed;
+  await loadSample(query.get('photo') || 'boulevard', 0);
+  if (query.get('photo2')) await loadSample(query.get('photo2'), 1);
+  else state.photos[1] = state.photos[0];
   if (shot === 'cover') {
     document.body.classList.add('shot-cover');
-    canvas.width = size.w;
-    canvas.height = size.h;
+    app.canvas.width = size.w;
+    app.canvas.height = size.h;
   }
-  await document.fonts.ready;
+  syncControls();
+  try { await document.fonts.ready; } catch { /* fonts are local; keep going */ }
   redraw();
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    window.__shotReady = true;
-  }));
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  window.__shotReady = true;
 }
