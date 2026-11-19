@@ -1,1 +1,26 @@
-[{"h":1080,"name":"1-cover.jpg","query":"?shot=cover&photo=boulevard&photo2=pier&caption=Sunset%20Heist&layout=comic&grade=sunset&size=wide","w":1920},{"h":720,"name":"2-editor.jpg","query":"?shot=editor&photo=boulevard&photo2=pier&caption=Boulevard%20Queen&layout=comic&grade=neon","w":1280},{"h":1350,"name":"3-cover.jpg","query":"?shot=cover&photo=boulevard&photo2=pier&caption=Boulevard%20Queen&layout=tilted&grade=neon&size=portrait","w":1080},{"h":1080,"name":"4-cover.jpg","query":"?shot=cover&photo=boulevard&photo2=pier&caption=Sunset%20Heist&layout=grid&grade=vice&size=square","w":1080}]
+[
+  {
+    "h": 1080,
+    "name": "1-cover.jpg",
+    "query": "?shot=cover&photo=boulevard&photo2=pier&caption=Sunset%20Heist&subtitle=neon%20coast%20nights&layout=comic&grade=sunset&size=wide",
+    "w": 1920
+  },
+  {
+    "h": 720,
+    "name": "2-editor.jpg",
+    "query": "?shot=editor&photo=boulevard&photo2=pier&caption=Boulevard%20Queen&subtitle=queen%20of%20the%20strip&layout=comic&grade=neon&size=wide",
+    "w": 1280
+  },
+  {
+    "h": 1350,
+    "name": "3-cover.jpg",
+    "query": "?shot=cover&photo=pier&photo2=boulevard&caption=Boulevard%20Queen&subtitle=queen%20of%20the%20strip&layout=strip&grade=neon&size=portrait",
+    "w": 1080
+  },
+  {
+    "h": 1080,
+    "name": "4-cover.jpg",
+    "query": "?shot=cover&photo=boulevard&photo2=pier&caption=Sunset%20Heist&subtitle=neon%20coast%20nights&layout=four&grade=halftone&size=square",
+    "w": 1080
+  }
+]
